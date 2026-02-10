@@ -15,7 +15,7 @@ import argparse
 import os
 
 from agent import BrowserAgent
-from computers import BrowserbaseComputer, PlaywrightComputer
+from computers import BrowserbaseComputer, PlaywrightComputer, DesktopComputer
 
 
 PLAYWRIGHT_SCREEN_SIZE = (1440, 900)
@@ -33,7 +33,7 @@ def main() -> int:
     parser.add_argument(
         "--env",
         type=str,
-        choices=("playwright", "browserbase"),
+        choices=("playwright", "browserbase", "desktop"),
         default="playwright",
         help="The computer use environment to use.",
     )
@@ -68,6 +68,11 @@ def main() -> int:
             screen_size=PLAYWRIGHT_SCREEN_SIZE,
             initial_url=args.initial_url
         )
+    elif args.env == "desktop":
+        env = DesktopComputer(
+            screen_size=PLAYWRIGHT_SCREEN_SIZE,
+            initial_url=args.initial_url,
+        )
     else:
         raise ValueError("Unknown environment: ", args.env)
 
@@ -76,6 +81,7 @@ def main() -> int:
             browser_computer=browser_computer,
             query=args.query,
             model_name=args.model,
+            environment=args.env,
         )
         agent.agent_loop()
     return 0
