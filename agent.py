@@ -92,7 +92,7 @@ class BrowserAgent:
 
         # Exclude any predefined functions here.
         excluded_predefined_functions = []
-        if self._environment == "desktop":
+        if self._environment in ("desktop", "desktop_win"):
             excluded_predefined_functions = [
                 "open_web_browser",
                 "search",
@@ -114,6 +114,22 @@ class BrowserAgent:
             if search_intent:
                 system_instruction += (
                     " If the user asks to find or search for something, open Spotlight first."
+                )
+        elif self._environment == "desktop_win":
+            system_instruction = (
+                "You are controlling a local desktop GUI (Windows). "
+                "Do not type into the current active app unless you have explicitly focused the correct input field. "
+                "To open apps, first open Start/Search with Win or Win+S using key_combination, "
+                "then type the app name and press Enter without clicking in other windows. "
+                "Prefer keyboard shortcuts to switch apps instead of typing into arbitrary windows."
+            )
+            search_intent = any(
+                token in self._query.lower()
+                for token in ("find", "search", "look for", "locate")
+            )
+            if search_intent:
+                system_instruction += (
+                    " If the user asks to find or search for something, open Start/Search first."
                 )
 
         # Add your own custom functions here.

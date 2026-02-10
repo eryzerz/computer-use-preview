@@ -96,6 +96,7 @@ You can specify a particular environment with the `--env <environment>` flag. Av
 - `playwright`: Runs the browser locally using Playwright.
 - `browserbase`: Connects to a Browserbase instance.
 - `desktop`: Controls the local desktop using OS-level mouse/keyboard automation (experimental).
+- `desktop_win`: Controls the local desktop on Windows using OS-level mouse/keyboard automation (experimental).
 
 **Local Playwright**
 
@@ -127,6 +128,14 @@ Runs the agent against your local desktop using OS-level mouse/keyboard automati
 python main.py --query="Search for Markdown files in my desktop" --env="desktop"
 ```
 
+**Local Desktop Windows (experimental)**
+
+Runs the agent against your local Windows desktop using OS-level mouse/keyboard automation.
+
+```bash
+python main.py --query="Open Notepad and type hello" --env="desktop_win"
+```
+
 **Available Models:**
 
 You can choose the model to use by specifying the `--model <model name>` flag. Available options on Gemini Developer API and Vertex AI Client:
@@ -147,7 +156,7 @@ The `main.py` script is the command-line interface (CLI) for running the browser
 | Argument            | Description                                                                                                                            | Required | Default                                   | Supported Environment(s) |
 | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------- | ----------------------------------------- | ------------------------ |
 | `--query`           | The natural language query for the browser agent to execute.                                                                           | Yes      | N/A                                       | All                      |
-| `--env`             | The computer use environment to use. Must be one of the following: `playwright`, `browserbase`, or `desktop`                           | No       | N/A                                       | All                      |
+| `--env`             | The computer use environment to use. Must be one of the following: `playwright`, `browserbase`, `desktop`, or `desktop_win`             | No       | N/A                                       | All                      |
 | `--initial_url`     | The initial URL to load when the browser starts.                                                                                       | No       | https://www.google.com                    | All                      |
 | `--highlight_mouse` | If specified, the agent will attempt to highlight the mouse cursor's position in the screenshots. This is useful for visual debugging. | No       | False (not highlighted)                   | `playwright`             |
 | `--model`           | The model to use. See the "Available Models" section for more information.                                                             | No       | `gemini-2.5-computer-use-preview-10-2025` | All                      |
